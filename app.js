@@ -1,5 +1,4 @@
 
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -21,7 +20,6 @@ app.use(express.static("public"));
 
 app.get("/", function (req, res) {
   res.render("home", { startingContent: homeStartingContent, posts:posts});
-
 });
 
 
@@ -43,22 +41,38 @@ app.get("/compose", function (req, res) {
 
 
 app.post("/compose", function (req, res) {
+
   // A java script object
   const post = {
     title: req.body.postTitle,
     content: req.body.postBody
   };
-  console.log(post);
 
   posts.push(post);
-
   res.redirect("/");
 });
 
 
+app.get("/posts/:postName", function (req, res) {
+  let para = req.params.postName;
 
+  let check = true;
+  for (let i = 0; i < posts.length; i++) {
+    if(posts[i].title !== para)
+    {
+      check = false;
+    }
+  }
 
+  if(check === true)
+  {
+    console.log("Match Found !");
+  }else
+  {
+    console.log("Match Not found!");
+  }
 
+});
 
 
 
